@@ -12,6 +12,7 @@ class StringCalculator {
 
     // Check for custom delimiter prefix.
     if (numbers.startsWith('//')) {
+      print('custom delimiter prefix found');
       final newlineIndex = numbers.indexOf('\n');
       if (newlineIndex == -1) {
         throw FormatException('Invalid custom delimiter format');
@@ -21,6 +22,8 @@ class StringCalculator {
       // Allow newline and comma along with custom delimiter.
       delimiterPattern = '(${RegExp.escape(customDelimiter)}|[,\n])';
       numbersSection = numbers.substring(newlineIndex + 1);
+    }else{
+      print('no custom delimiter prefix found');
     }
 
     final parts = numbersSection.split(RegExp(delimiterPattern));

@@ -48,5 +48,32 @@ void main() {
         expect(calculator.add('//*\n2*3*4'), equals(9));
       });
     });
+     
+
+    group('negative number handling', () {
+      test('throws an exception when a negative number is present', () {
+        final calculator = StringCalculator();
+        expect(
+          () => calculator.add('-1'),
+          throwsA(isA<Exception>().having(
+            (e) => e.toString(),
+            'message',
+            contains('negative numbers not allowed -1'),
+          )),
+        );
+      });
+
+      test('lists all negative numbers in the exception message', () {
+        final calculator = StringCalculator();
+        expect(
+          () => calculator.add('1,-2,-3,4'),
+          throwsA(isA<Exception>().having(
+            (e) => e.toString(),
+            'message',
+            allOf(contains('-2'), contains('-3')),
+          )),
+        );
+      });
+    });
   });
 } 
